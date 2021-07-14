@@ -8,7 +8,6 @@ public protocol SolanaAccountStorage {
 
 public class Solana {
     let router: NetworkingRouter
-    public let socket: SolanaSocket
     public let auth: SolanaAccountStorage
     public let api: Api
     public let action: Action
@@ -17,7 +16,6 @@ public class Solana {
     public init(router: NetworkingRouter, accountStorage: SolanaAccountStorage) {
         self.router = router
         self.auth = accountStorage
-        self.socket = SolanaSocket(endpoint: router.endpoint)
         self.supportedTokens = (try? TokensListParser().parse(network: router.endpoint.network.cluster).get()) ?? []
         self.api = Api(router: router, auth: accountStorage, supportedTokens: supportedTokens)
         self.action = Action(api: self.api, router: router, auth: accountStorage, supportedTokens: supportedTokens)
