@@ -6,7 +6,7 @@ public struct Account: Codable, Hashable {
     public let publicKey: PublicKey
     public let secretKey: Data
     
-    public init?(phrase: [String] = [], network: Network, derivablePath: DerivablePath? = nil) {
+    public init?(phrase: [String] = [], derivablePath: DerivablePath? = nil) {
         let mnemonic: Mnemonic
         var phrase = phrase.filter {!$0.isEmpty}
         if !phrase.isEmpty,
