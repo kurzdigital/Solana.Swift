@@ -28,9 +28,10 @@ public struct RequestConfiguration: Encodable {
     public let limit: Int?
     public let before: String?
     public let until: String?
+    public let searchTransactionHistory: Bool?
     
-    public init?(commitment: Commitment? = nil, encoding: String? = nil, dataSlice: DataSlice? = nil, filters: [[String: EncodableWrapper]]? = nil, limit: Int? = nil, before: String? = nil, until: String? = nil) {
-        if commitment == nil && encoding == nil && dataSlice == nil && filters == nil && limit == nil && before == nil && until == nil {
+    public init?(commitment: Commitment? = nil, encoding: String? = nil, dataSlice: DataSlice? = nil, filters: [[String: EncodableWrapper]]? = nil, limit: Int? = nil, before: String? = nil, until: String? = nil, searchTransactionHistory: Bool? = nil) {
+        if commitment == nil && encoding == nil && dataSlice == nil && filters == nil && limit == nil && before == nil && until == nil && searchTransactionHistory == nil {
             return nil
         }
         self.commitment = commitment
@@ -40,6 +41,7 @@ public struct RequestConfiguration: Encodable {
         self.limit = limit
         self.before = before
         self.until = until
+        self.searchTransactionHistory = searchTransactionHistory
     }
 }
 
