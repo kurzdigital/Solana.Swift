@@ -13,6 +13,14 @@ public class Solana {
     public let action: Action
     public let supportedTokens: [Token]
 
+    public static func loggerOn() {
+        Logger.on()
+    }
+
+    public static func loggerOff() {
+        Logger.off()
+    }
+
     public init(router: NetworkingRouter, accountStorage: SolanaAccountStorage) {
         self.router = router
         self.auth = accountStorage
