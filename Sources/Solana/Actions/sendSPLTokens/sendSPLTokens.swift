@@ -62,7 +62,7 @@ extension Action {
 //            )
 
             // transfer checked instruction:
-            let sendCheckedInstruction = TokenProgram.transferInstruction(
+            let sendCheckedInstruction = TokenProgram.transferCheckedInstruction(
                 programId: .tokenProgramId,
                 source: fromPublicKey,
                 mint: mint,
