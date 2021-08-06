@@ -50,16 +50,28 @@ extension Action {
                 instructions.append(createATokenInstruction)
             }
 
-            // send instruction
-            let sendInstruction = TokenProgram.transferInstruction(
-                tokenProgramId: .tokenProgramId,
+//            // send instruction
+//            let sendInstruction = TokenProgram.transferInstruction(
+//                tokenProgramId: .tokenProgramId,
+//                source: fromPublicKey,
+//                destination: toPublicKey,
+//                owner: account.publicKey,
+//                amount: amount
+//            )
+
+            // transfer checked instruction:
+            let sendCheckedInstruction = TokenProgram.transferInstruction(
+                programId: .tokenProgramId,
                 source: fromPublicKey,
+                mint: mint,
                 destination: toPublicKey,
                 owner: account.publicKey,
-                amount: amount
+                multiSigners: [],
+                amount: amount,
+                decimals: decimals
             )
 
-            instructions.append(sendInstruction)
+            instructions.append(sendCheckedInstruction)
             return .success((instructions: instructions, account: account))
 
         }.flatMap { (instructions, account) in
