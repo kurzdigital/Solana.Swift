@@ -28,15 +28,17 @@ extension Action {
             }
 
             guard let fromPublicKey = PublicKey(string: fromPublicKey) else {
-                return .failure( SolanaError.invalidPublicKey)
+                return .failure(SolanaError.invalidPublicKey)
             }
+
+            guard let mint = PublicKey(string: mintAddress) else {
+                return .failure(SolanaError.invalidPublicKey)
+            }
+
             var instructions = [TransactionInstruction]()
 
             // create associated token address
             if isUnregisteredAsocciatedToken {
-                guard let mint = PublicKey(string: mintAddress) else {
-                    return .failure(SolanaError.invalidPublicKey)
-                }
                 guard let owner = PublicKey(string: destinationAddress) else {
                     return .failure(SolanaError.invalidPublicKey)
                 }
