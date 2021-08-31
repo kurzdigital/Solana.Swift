@@ -2,7 +2,7 @@ import Foundation
 
 public extension Api {
     func getConfirmedTransaction(transactionSignature: String, commitment: Commitment? = nil, onComplete: @escaping (Result<TransactionInfo, Error>) -> Void) {
-        router.request(parameters: [transactionSignature, "jsonParsed", RequestConfiguration(commitment: commitment)]) { (result: Result<TransactionInfo, Error>) in
+        router.request(parameters: [transactionSignature, RequestConfiguration(commitment: commitment, encoding: "jsonParsed")]) { (result: Result<TransactionInfo, Error>) in
             switch result {
             case .success(let transactions):
                 onComplete(.success(transactions))
