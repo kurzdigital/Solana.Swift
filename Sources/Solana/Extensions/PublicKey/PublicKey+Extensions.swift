@@ -8,4 +8,5 @@ public extension PublicKey {
     static let ownerValidationProgramId = PublicKey(string: "4MNPdKu9wFMvEeZBMt3Eipfs5ovVWTJb31pEXDJAAxX5")!
     static let swapHostFeeAddress = PublicKey(string: "AHLwq66Cg3CuDJTFtwjPfwjJhifiv6rFwApQNKgX57Yg")!
     static let splAssociatedTokenAccountProgramId = PublicKey(string: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL")!
+    static let metaDataProgramId = PublicKey(string: "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s")!
 }
