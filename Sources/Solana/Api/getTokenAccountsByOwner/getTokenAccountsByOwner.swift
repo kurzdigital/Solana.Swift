@@ -37,7 +37,8 @@ public extension Api {
             onComplete(Result.failure(SolanaError.other("mint or programId are mandatory parameters")))
             return
         }
-        router.request(parameters: [pubkey, parameterMap, configs]) { (result: Result<Rpc<[SolanaTokenAccountsByOwner]?>, Error>) in
+
+        router.request(bcMethod: "getTokenAccountsByOwner", parameters: [pubkey, parameterMap, configs]) { (result: Result<Rpc<[SolanaTokenAccountsByOwnerValue]?>, Error>) in
             switch result {
             case .success(let rpc):
                 guard let value = rpc.value else {
