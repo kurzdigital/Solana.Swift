@@ -71,7 +71,7 @@ extension PublicKey {
         return .success(newKey)
     }
 
-    private static func isOnCurve(publicKeyBytes: Data) -> Int {
+    public static func isOnCurve(publicKeyBytes: Data) -> Int {
         var r = [[Int64]](repeating: NaclLowLevel.gf(), count: 4)
 
         var t = NaclLowLevel.gf(),
