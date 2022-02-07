@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol BorshSerializable {
-  func serialize(to writer: inout Data) throws
+    func serialize(to writer: inout Data) throws
 }
 
 extension UInt8: BorshSerializable {}
@@ -16,7 +16,7 @@ extension Int64: BorshSerializable {}
 extension Int128: BorshSerializable {}
 
 public extension FixedWidthInteger {
-  func serialize(to writer: inout Data) throws {
+  public func serialize(to writer: inout Data) throws {
     writer.append(contentsOf: withUnsafeBytes(of: self.littleEndian) { Array($0) })
   }
 }
@@ -45,7 +45,7 @@ extension Bool: BorshSerializable {
 }
 
 extension Optional where Wrapped: BorshSerializable {
-  func serialize(to writer: inout Data) throws {
+  public func serialize(to writer: inout Data) throws {
     switch self {
     case .some(let value):
       try UInt8(1).serialize(to: &writer)
