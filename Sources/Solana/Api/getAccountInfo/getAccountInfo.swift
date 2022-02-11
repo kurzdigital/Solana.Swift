@@ -1,8 +1,8 @@
 import Foundation
 
 public extension Api {
-    func getAccountInfo<T: BufferLayout>(account: String, decodedTo: T.Type, onComplete: @escaping(Result<BufferInfo<T>, Error>) -> Void) {
-        let configs = RequestConfiguration(encoding: "base64")
+    func getAccountInfo<T: BufferLayout>(account: String, commitment: Commitment? = nil, decodedTo: T.Type, onComplete: @escaping(Result<BufferInfo<T>, Error>) -> Void) {
+        let configs = RequestConfiguration(commitment: commitment, encoding: "base64")
         router.request(parameters: [account, configs]) {  (result: Result<Rpc<BufferInfo<T>?>, Error>) in
             switch result {
             case .success(let rpc):

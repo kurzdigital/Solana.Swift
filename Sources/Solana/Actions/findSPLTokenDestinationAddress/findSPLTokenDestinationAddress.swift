@@ -11,6 +11,7 @@ extension Action {
         ContResult<BufferInfo<AccountInfo>, Error>.init { cb in
             self.api.getAccountInfo(
                 account: destinationAddress,
+                commitment: "confirmed",
                 decodedTo: AccountInfo.self
             ) { cb($0) }
         }.flatMap { info in
