@@ -4,7 +4,7 @@ extension Action {
     fileprivate func retryOrError(instructions: [TransactionInstruction],
                                   recentBlockhash: String? = nil,
                                   signers: [Account],
-                                  maxAttemps: Int = 3,
+                                  maxAttemps: Int = 5,
                                   numberOfTries: Int = 0,
                                   error: Error,
                                   onComplete: @escaping ((Result<String, Error>) -> Void)) {
@@ -29,7 +29,7 @@ extension Action {
         instructions: [TransactionInstruction],
         recentBlockhash: String? = nil,
         signers: [Account],
-        maxAttemps: Int = 3,
+        maxAttemps: Int = 5,
         numberOfTries: Int = 0,
         onComplete: @escaping ((Result<String, Error>) -> Void)
     ) {
@@ -68,7 +68,7 @@ extension Action {
     fileprivate func retrySimulateOrError(instructions: [TransactionInstruction],
                                           recentBlockhash: String? = nil,
                                           signers: [Account],
-                                          maxAttemps: Int = 3,
+                                          maxAttemps: Int = 5,
                                           numberOfTries: Int = 0,
                                           error: (Error),
                                           onComplete: @escaping ((Result<String, Error>) -> Void)) {
@@ -93,7 +93,7 @@ extension Action {
         instructions: [TransactionInstruction],
         recentBlockhash: String? = nil,
         signers: [Account],
-        maxAttemps: Int = 3,
+        maxAttemps: Int = 5,
         numberOfTries: Int = 0,
         onComplete: @escaping((Result<String, Error>) -> Void)
     ) {
