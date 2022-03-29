@@ -3,10 +3,10 @@ import Foundation
 extension Action {
     public func sendSPLTokens(
         mintAddress: String,
-        decimals: Decimals,
         from fromPublicKey: String,
         to destinationAddress: String,
         amount: UInt64,
+        allowUnfundedRecipient: Bool = false,
         onComplete: @escaping (Result<TransactionID, Error>) -> Void
     ) {
         guard let account = try? self.auth.account.get() else {
@@ -16,7 +16,8 @@ extension Action {
         ContResult.init { cb in
             self.findSPLTokenDestinationAddress(
                 mintAddress: mintAddress,
-                destinationAddress: destinationAddress
+                destinationAddress: destinationAddress,
+                allowUnfundedRecipient: allowUnfundedRecipient
             ) { cb($0) }
         }.flatMap { (destination, isUnregisteredAsocciatedToken) in
 
@@ -28,17 +29,15 @@ extension Action {
             }
 
             guard let fromPublicKey = PublicKey(string: fromPublicKey) else {
-                return .failure(SolanaError.invalidPublicKey)
+                return .failure( SolanaError.invalidPublicKey)
             }
-
-            guard let mint = PublicKey(string: mintAddress) else {
-                return .failure(SolanaError.invalidPublicKey)
-            }
-
             var instructions = [TransactionInstruction]()
 
             // create associated token address
             if isUnregisteredAsocciatedToken {
+                guard let mint = PublicKey(string: mintAddress) else {
+                    return .failure(SolanaError.invalidPublicKey)
+                }
                 guard let owner = PublicKey(string: destinationAddress) else {
                     return .failure(SolanaError.invalidPublicKey)
                 }
@@ -52,28 +51,16 @@ extension Action {
                 instructions.append(createATokenInstruction)
             }
 
-//            // send instruction
-//            let sendInstruction = TokenProgram.transferInstruction(
-//                tokenProgramId: .tokenProgramId,
-//                source: fromPublicKey,
-//                destination: toPublicKey,
-//                owner: account.publicKey,
-//                amount: amount
-//            )
-
-            // transfer checked instruction:
-            let sendCheckedInstruction = TokenProgram.transferCheckedInstruction(
-                programId: .tokenProgramId,
+            // send instruction
+            let sendInstruction = TokenProgram.transferInstruction(
+                tokenProgramId: .tokenProgramId,
                 source: fromPublicKey,
-                mint: mint,
                 destination: toPublicKey,
                 owner: account.publicKey,
-                multiSigners: [],
-                amount: amount,
-                decimals: decimals
+                amount: amount
             )
 
-            instructions.append(sendCheckedInstruction)
+            instructions.append(sendInstruction)
             return .success((instructions: instructions, account: account))
 
         }.flatMap { (instructions, account) in
