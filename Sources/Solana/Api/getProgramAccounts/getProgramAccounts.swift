@@ -10,7 +10,7 @@ public extension Api {
     ///   - onComplete: The result object of Arrays of ProgramAccount<T>. Where T is the decodedTo object
     func getProgramAccounts<T: BufferLayout>(
         publicKey: String,
-        configs: RequestConfiguration? = RequestConfiguration(encoding: "base64"),
+        configs: RequestConfiguration? = RequestConfiguration(commitment: .confirmed, encoding: "base64"),
         decodedTo: T.Type,
         onComplete: @escaping (Result<[ProgramAccount<T>], Error>) -> Void
     ) {
@@ -31,7 +31,7 @@ public extension Api {
     ///   - onComplete: The result object of Arrays of ProgramAccountPureData(which is ProgramAccount<Data>)
     func getProgramAccounts(
         publicKey: String,
-        configs: RequestConfiguration? = RequestConfiguration(encoding: "base64"),
+        configs: RequestConfiguration? = RequestConfiguration(commitment: .confirmed, encoding: "base64"),
         onComplete: @escaping (Result<[ProgramAccountPureData], Error>) -> Void
     ) {
         router.request(parameters: [publicKey, configs]) { (result: Result<[ProgramAccountPureData], Error>) in
@@ -57,7 +57,7 @@ public extension Api {
     /// - Returns: Arrays of ProgramAccount<T>. Where T is the decodedTo object
     func getProgramAccounts<T: BufferLayout>(
         publicKey: String,
-        configs: RequestConfiguration? = RequestConfiguration(encoding: "base64"),
+        configs: RequestConfiguration? = RequestConfiguration(commitment: .confirmed, encoding: "base64"),
         decodedTo: T.Type = T.self
     ) async throws -> [ProgramAccount<T>] {
         try await withCheckedThrowingContinuation { c in
@@ -78,7 +78,7 @@ public extension Api {
     /// - Returns: Arrays of ProgramAccountPureData(which is ProgramAccount<Data>)
     func getProgramAccounts(
         publicKey: String,
-        configs: RequestConfiguration? = RequestConfiguration(encoding: "base64")
+        configs: RequestConfiguration? = RequestConfiguration(commitment: .confirmed, encoding: "base64")
     ) async throws -> [ProgramAccountPureData] {
         try await withCheckedThrowingContinuation { c in
             self.getProgramAccounts(publicKey: publicKey, configs: configs, onComplete: c.resume(with:))
@@ -88,7 +88,7 @@ public extension Api {
 
 public extension ApiTemplates {
     struct GetProgramAccounts<T: BufferLayout>: ApiTemplate {
-        public init(publicKey: String, configs: RequestConfiguration? = RequestConfiguration(encoding: "base64"), decodedTo: T.Type) {
+        public init(publicKey: String, configs: RequestConfiguration? = RequestConfiguration(commitment: .confirmed, encoding: "base64"), decodedTo: T.Type) {
             self.publicKey = publicKey
             self.configs = configs
             self.decodedTo = decodedTo
